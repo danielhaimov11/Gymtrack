@@ -1,0 +1,229 @@
+/* Reset base styles */
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.layout-container {
+    position: relative;
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 260px;
+    background: #2c3e50;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+}
+
+.sidebar .logo-details {
+    height: 60px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    background: #1a252f;
+}
+
+.sidebar .logo-details i,
+.sidebar .logo-details .logo_name {
+    color: #fff;
+    font-size: 20px;
+}
+
+.sidebar .nav-links {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.sidebar .nav-links li {
+    padding: 0;
+}
+
+.sidebar .nav-links a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.sidebar .nav-links a:hover,
+.sidebar .nav-links a.active {
+    background: #1a252f;
+    color: #007bff;
+}
+
+.sidebar .nav-links a i {
+    min-width: 30px;
+    font-size: 18px;
+    color: inherit;
+}
+
+.main-content {
+    position: relative;
+    flex: 1;
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    min-height: 100vh;
+    transition: margin-left 0.3s ease;
+    background: #f4f6f9;
+    z-index: 1;
+}
+
+.logout-link {
+    margin-top: auto;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        width: 280px;  /* הגדלנו מעט כדי שיהיה מקום לטקסט */
+    }
+    
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding-top: 75px; /* הגדלנו את המרווח מלמעלה */
+    }
+
+    .sidebar-toggle {
+        display: flex;    /* מציג את הכפתור במסך קטן */
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Prevent body scroll when sidebar is open */
+    body.sidebar-open {
+        overflow: hidden;
+    }
+
+    /* Ensure consistent sizing */
+    .sidebar .nav-links a {
+        padding: 12px 20px;
+        font-size: 16px;
+        height: 45px; /* התאמה לגובה כפתור ההמבורגר */
+        display: flex;
+        align-items: center;
+    }
+
+    .sidebar .nav-links a i {
+        font-size: 20px;
+        width: 45px; /* התאמה לרוחב כפתור ההמבורגר */
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Fix z-index stacking */
+    .sidebar {
+        z-index: 1001;
+    }
+
+    .main-content {
+        z-index: 1;
+    }
+
+    /* התאמת הלוגו במובייל */
+    .sidebar .logo-details {
+        height: 45px; /* התאמה לגובה כפתור ההמבורגר */
+        padding: 0 20px;
+    }
+
+    .sidebar .logo-details i,
+    .sidebar .logo-details .logo_name {
+        font-size: 18px;
+    }
+
+    /* ביטול ההסתרה של טקסט במובייל */
+    .sidebar .logo_name,
+    .sidebar .link_name {
+        display: inline-block;
+        margin-left: 10px;
+    }
+
+    .sidebar .nav-links a i {
+        font-size: 28px; /* התאמת גודל האייקונים בתפריט */
+    }
+
+    .sidebar-toggle:active {
+        background: #1a252f; /* אפקט לחיצה */
+    }
+}
+
+/* Remove conflicting media query */
+@media (max-width: 768px) {
+    .sidebar .logo_name,
+    .sidebar .link_name {
+        display: inline-block;
+    }
+}
+
+/* Add toggle button for mobile */
+.sidebar-toggle {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1001;
+    width: 45px;          /* גודל הכפתור */
+    height: 45px;         /* גודל הכפתור */
+    border-radius: 10px;
+    background: #1a252f;    /* כהה יותר כמו התפריט */
+    border: none;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    padding: 0;          /* מאפס ריווח פנימי */
+}
+
+.sidebar-toggle i {
+    font-size: 28px;     /* הגדלת האייקון */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-toggle:active,
+.sidebar-toggle:hover {
+    background: #2c3e50;  /* צבע ההובר כמו התפריט */
+}
+
+/* Overlay styling */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+}
